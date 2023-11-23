@@ -158,19 +158,62 @@ Entire home/apt       Private room     Shared room
 ```
 
 
-## 10.Filtrar apartamentos enteros en el barrio Sol
+## 10.Cual es el precio medio de alquiler de cada uno, la diferencia que hay ¿es estadísticamente significativa? ¿Con que test lo comprobarías?
 - Filtrar el dataframe para incluir solo apartamentos enteros en el barrio Sol.
 
-## 11.Barrios con más apartamentos enteros
-- Encontrar y mostrar los 5 barrios con más apartamentos enteros en alquiler.
+```
+TipoAlquiler
+<fctr>
+Precio
+<dbl>
+Entire home/apt	87.29661			
+Private room	34.25514			
+Shared room	29.85340			
+3 rows
 
-## 12.Barrios con mayor precio medio y número de entradas
+
+	Shapiro-Wilk normality test
+
+data:  entireHome$Precio[1:5000]
+W = 0.64959, p-value < 2.2e-16
+
+                Df   Sum Sq Mean Sq F value Pr(>F)    
+TipoAlquiler     2  8981217 4490608    1828 <2e-16 ***
+Residuals    13195 32417217    2457                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+9 observations deleted due to missingness
+
+```
+
+## 11. Filtra el dataframe cuyos tipo de alquiler sea 'Entire home/apt' y guardalo en un dataframe llamado *airbnb_entire*. Estas serán las entradas que tienen un alquiler del piso completo.
+- Encontrar y mostrar los 5 barrios con más apartamentos enteros en alquiler.
+```
+  [1] "Embajadores" "Universidad" "Palacio"     "Sol"         "Cortes"     
+```
+## 12.¿Cuales son los 5 barrios que tienen un mayor número de apartamentos enteros en alquiler? Nota: Mirar solo en airbnb_entire. A partir de este punto y hasta que se diga lo contrario partiremos de airbnb_entire.
 - Calcular el precio medio y el número de entradas para los 5 barrios con el mayor precio.
+```
+  [1] "Embajadores" "Universidad" "Palacio"     "Sol"         "Cortes"     
+```
 
 ## 13.Barrios con mayor precio y más de 100 entradas
 - Filtrar y mostrar los 5 barrios con mayor precio y más de 100 entradas.
 
-## 14.Diagramas de densidad por barrio
+
+ 
+ ```
+Barrio
+<fctr>
+PrecioMedio
+<dbl>
+77	Palomas	309.7500		
+50	Fuentelareina	180.0000		
+93	Recoletos	161.9254		
+43	El Plantío	150.0000		
+30	Castellana	141.3889
+```
+## 14.¿Cuantos apartamentos hay en cada uno de esos barrios?
 - Crear diagramas de densidad de precios para cada uno de los 5 barrios.
 
 ## 15.Tamaño medio de apartamentos por barrio
