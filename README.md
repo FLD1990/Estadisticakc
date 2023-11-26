@@ -214,31 +214,187 @@ PrecioMedio
 30	Castellana	141.3889
 ```
 ## 14.¿Cuantos apartamentos hay en cada uno de esos barrios?
-- Crear diagramas de densidad de precios para cada uno de los 5 barrios.
+- Mostrar una dataframe con el nombre del barrio, el precio y el número de entradas.
 
-## 15.Tamaño medio de apartamentos por barrio
-- Calcular el tamaño medio de los apartamentos en metros cuadrados para los 5 barrios con mayor precio.
+ ```
+Barrio			Freq	PrecioMedio
+					<dbl>
+77	Palomas		2	309.7500	
+50	Fuentelareina	1	180.0000	
+93	Recoletos	122	161.9254	
+43	El Plantío	0	150.0000	
+30	Castellana	66	141.3889	
+5 rows
+```
 
+
+## 15.Partiendo del dataframe anterior, muestra los 5 barrios con mayor precio, pero que tengan más de 100 entradas de alquiler
+
+```	
+Barrio 			Freq	PrecioMedio
+93	Recoletos	122	161.92537	
+52	Goya		122	111.33803	
+106	Sol		648	100.75036	
+108	Trafalgar	203	98.57848	
+59	Justicia	486	98.25468	
+```
 ## 16.Diagramas de densidad por tamaño de apartamento
 - Crear diagramas de densidad de tamaños de apartamentos para cada uno de los 5 barrios.
+  (Ver practica)
 
-## 17.Prueba de Kruskal-Wallis para tamaños de apartamento
-- Realizar una prueba de Kruskal-Wallis para determinar si las distribuciones de tamaños de apartamentos son estadísticamente diferentes entre los 5 barrios.
+## 17.Calcula el tamaño medio, en metros cuadrados, para los 5 barrios anteriores y muestralo en el mismo dataframe junto con el precio y número de entradas
+```
+Barrio		 MetrosCuadrados Freq PrecioMedio
+Goya		516.8504	122	111.33803	
+Justicia	285.2669	486	98.25468	
+Recoletos	266.6316	122	161.92537	
+Sol		456.1692	648	100.75036	
+Trafalgar	293.0426	203	98.57848	
+```
+## 18. Dibuja el diagrama de densidad de distribución de los diferentes tamaños de apartamentos. Serían 5 gráficas, una por cada barrio.
+- (Ver practica)
 
-## 18.Correlación entre variables
-- Calcular la correlación entre diferentes variables.
+## 19.Esta claro que las medias de metros cuadrados de cada uno de estos 5 barrios parecen ser diferentes, pero ¿son estadísticamente diferentes? ¿Que test habría que usar para comprobarlo?
 
-## 19.Filtrar datos para mejorar correlación
-- Filtrar los datos para mejorar la correlación entre el número de dormitorios y los metros cuadrados.
+```
+	Shapiro-Wilk normality test
 
-## 20.Modelo lineal para predecir el precio
-- Calcular dos modelos lineales para predecir el precio utilizando el número de dormitorios y los metros cuadrados.
+data:  recoletos$MetrosCuadrados
+W = 0.75, p-value < 2.2e-16
 
-## 21.Incremento del precio por metro cuadrado extra
-- Calcular el incremento del precio por cada metro cuadrado extra con su intervalo de confianza al 95%.
 
-## 22.Incremento del precio por habitación
-- Calcular el incremento del precio por cada habitación con su intervalo de confianza al 95%.
+	Shapiro-Wilk normality test
 
-## 23.Probabilidad e intervalo de confianza para 3 dormitorios
-- Calcular la probabilidad de encontrar un apartamento con 3 dormitorios en el barrio Sol y su intervalo de confianza.
+data:  sol$MetrosCuadrados
+W = 0.83089, p-value = 8.691e-07
+
+
+	Shapiro-Wilk normality test
+
+data:  goya$MetrosCuadrados
+W = 0.93813, p-value = 0.5199
+
+
+	Shapiro-Wilk normality test
+
+data:  trafalgar$MetrosCuadrados
+W = 0.75023, p-value = 0.01276
+
+
+	Shapiro-Wilk normality test
+
+data:  justicia$MetrosCuadrados
+W = 0.76212, p-value = 0.0006419
+
+
+	Shapiro-Wilk normality test
+
+data:  justicia$MetrosCuadrados
+W = 0.76212, p-value = 0.0006419
+
+
+	Kruskal-Wallis rank sum test
+
+data:  Precio by MetrosCuadrados
+Kruskal-Wallis chi-squared = 152.26, df = 72, p-value = 1.087e-07
+
+```
+
+
+## 20.Primero calculamos la correlación para ver como se relacionan estas variables entre sí.
+```
+[1] "Correlacion NumBanyos y NumDormitorios: 0.676190560725488"
+[1] "Correlacion MaxOcupantes y MetrosCuadrados: 0.42862325466652"
+[1] "Correlacion NumBanyos y MaxOcupantes: 0.657816206151614"
+[1] "Correlacion NumDormitorios y MetrosCuadrados: 0.568452076445061"
+[1] "Correlacion NumBanyos y MetrosCuadrados: 0.482054875848167"
+
+```
+
+## 21.Se observa que la correlación entre el número de dormitorios y los metros cuadrados es sorprendentemente baja. ¿Son de fiar esos números?
+- (Ver grafica).
+
+## 22.Una vez que hayamos filtrado los datos correspondientes calcular el valor o la combinación de valores que mejor nos permite obtener el precio de un inmueble.¿Que variable es más fiable para conocer el precio de un inmueble, el número de habitaciones o los metros cuadrados?
+```
+Call:
+lm(formula = Precio ~ NumDormitorios, data = barrio_sol)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-94.92 -15.76  -3.76  19.24  56.08 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      39.970      7.296   5.478 3.19e-06 ***
+NumDormitorios   40.790      3.684  11.073 2.65e-13 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 27.95 on 37 degrees of freedom
+Multiple R-squared:  0.7682,	Adjusted R-squared:  0.7619 
+F-statistic: 122.6 on 1 and 37 DF,  p-value: 2.651e-13
+
+
+Call:
+lm(formula = Precio ~ MetrosCuadrados, data = barrio_sol)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-64.193 -20.915  -6.988  21.134 124.855 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+(Intercept)     46.01999   10.30723   4.465 7.27e-05 ***
+MetrosCuadrados  0.08606    0.01236   6.961 3.19e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 38.2 on 37 degrees of freedom
+Multiple R-squared:  0.5671,	Adjusted R-squared:  0.5554 
+F-statistic: 48.46 on 1 and 37 DF,  p-value: 3.191e-08
+```
+
+## 23.Responde con su correspondiente margen de error del 95%, ¿cuantos euros incrementa el precio del alquiler por cada metro cuadrado extra del piso?
+```
+                      2.5 %     97.5 %
+(Intercept)     25.13556727 66.9044113
+MetrosCuadrados  0.06101273  0.1111106
+```
+##24. Responde con su correspondiente margen de error del 95%, ¿cuantos euros incrementa el precio del alquiler por cada habitación?
+```
+                  2.5 %   97.5 %
+(Intercept)    25.18671 54.75274
+NumDormitorios 33.32623 48.25347
+```
+
+##25. ¿Cual es la probabilidad de encontrar, en el barrio de Sol, un apartamento en alquiler con 3 dormitorios? ¿Cual es el intervalo de confianza de esa probabilidad?
+
+```
+ 0  1  2  3  4  5 
+ 2 20  8  2  2  1 
+Number of cases in table: 35 
+Number of factors: 1 
+
+
+	Exact binomial test
+
+data:  ns and n
+number of successes = 2, number of trials = 28, p-value = 3.032e-06
+alternative hypothesis: true probability of success is not equal to 0.5
+95 percent confidence interval:
+ 0.008770497 0.235034773
+sample estimates:
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
